@@ -12,22 +12,13 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 
--module(emqx_acl_demo).
+-module(emqx_plugin_http_auth_cli).
 
--include_lib("emqx/include/emqx.hrl").
+-export([cmd/1]).
 
-%% ACL callbacks
--export([init/1, check_acl/2, reload_acl/1, description/0]).
+cmd(["arg1", "arg2"]) ->
+    emqx_cli:print("ok");
 
-init(Opts) ->
-    {ok, Opts}.
-
-check_acl({Credentials, PubSub, Topic}, _Opts) ->
-    io:format("ACL Demo: ~p ~p ~p~n", [Credentials, PubSub, Topic]),
-    allow.
-
-reload_acl(_Opts) ->
-    ok.
-
-description() -> "ACL Demo Module".
+cmd(_) ->
+    emqx_cli:usage([{"cmd arg1 arg2", "cmd demo"}]).
 

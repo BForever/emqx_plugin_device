@@ -12,7 +12,7 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 
--module(emqx_plugin_template).
+-module(emqx_plugin_http_auth).
 
 -include_lib("emqx/include/emqx.hrl").
 
@@ -39,13 +39,18 @@ load(Env) ->
     emqx:hook('message.publish', fun ?MODULE:on_message_publish/2, [Env]),
     emqx:hook('message.delivered', fun ?MODULE:on_message_delivered/3, [Env]),
     emqx:hook('message.acked', fun ?MODULE:on_message_acked/3, [Env]),
-    emqx:hook('message.dropped', fun ?MODULE:on_message_dropped/3, [Env]).
+    emqx:hook('message.dropped', fun ?MODULE:on_message_dropped/3, [Env]),
+    io:format("authentication plugin loaded.~n",[]).
 
 on_client_connected(#{client_id := ClientId}, ConnAck, ConnAttrs, _Env) ->
     io:format("Client(~s) connected, connack: ~w, conn_attrs:~p~n", [ClientId, ConnAck, ConnAttrs]).
+%%    {ok, {{Version, 200, ReasonPhrase}, Headers, Body}}=httpc:request("http://http/error"),
+%%    io:format("response: ~w~n",[Body]).
 
 on_client_disconnected(#{client_id := ClientId}, ReasonCode, _Env) ->
     io:format("Client(~s) disconnected, reason_code: ~w~n", [ClientId, ReasonCode]).
+%%    {ok, {{Version, 200, ReasonPhrase}, Headers, Body}}=httpc:request("http://http/error"),
+%%    io:format("response: ~w~n",[Body]).
 
 on_client_subscribe(#{client_id := ClientId}, RawTopicFilters, _Env) ->
     io:format("Client(~s) will subscribe: ~p~n", [ClientId, RawTopicFilters]),

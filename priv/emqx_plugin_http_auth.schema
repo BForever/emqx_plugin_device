@@ -1,0 +1,21 @@
+%% http.auth.server.domain
+{
+    mapping,
+    "http.auth.domain",
+    "emq_plugin_http_auth.domain",
+    [
+        {default, "127.0.0.1"},
+        {datatype, string}
+    ]
+}.
+
+%% http.auth.server.port
+{
+    mapping,
+    "http.auth.port",
+    "emq_plugin_http_auth.port",
+    [
+        {default, 80},
+        {datatype, integer}
+    ]
+}.

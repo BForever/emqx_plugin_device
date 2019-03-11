@@ -12,17 +12,22 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 
--module(emqx_plugin_template_sup).
+-module(emqx_plugin_http_auth_acl).
 
--behaviour(supervisor).
+-include_lib("emqx/include/emqx.hrl").
 
--export([start_link/0]).
+%% ACL callbacks
+-export([init/1, check_acl/2, reload_acl/1, description/0]).
 
--export([init/1]).
+init(Opts) ->
+    {ok, Opts}.
 
-start_link() ->
-    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+check_acl({Credentials, PubSub, Topic}, _Opts) ->
+    io:format("ACL Demo: ~p ~p ~p~n", [Credentials, PubSub, Topic]),
+    allow.
 
-init([]) ->
-    {ok, { {one_for_all, 0, 1}, []} }.
+reload_acl(_Opts) ->
+    ok.
+
+description() -> "ACL Demo Module".
 

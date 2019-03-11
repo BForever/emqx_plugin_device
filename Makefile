@@ -1,5 +1,5 @@
-PROJECT = emqx_plugin_template
-PROJECT_DESCRIPTION = EMQ X Plugin Template
+PROJECT = emqx_plugin_http_auth
+PROJECT_DESCRIPTION = EMQ X Http Authentication Plugin
 
 CUR_BRANCH := $(shell git branch | grep -e "^*" | cut -d' ' -f 2)
 BRANCH := $(if $(filter $(CUR_BRANCH), master develop), $(CUR_BRANCH))
@@ -22,4 +22,4 @@ include erlang.mk
 app:: rebar.config
 
 app.config::
-	./deps/cuttlefish/cuttlefish -l info -e etc/ -c etc/emqx_plugin_template.conf -i priv/emqx_plugin_template.schema -d data
+	./deps/cuttlefish/cuttlefish -l info -e etc/ -c etc/emqx_plugin_http_auth.conf -i priv/emqx_plugin_http_auth.schema -d data

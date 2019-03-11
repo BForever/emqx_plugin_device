@@ -12,21 +12,23 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 
--module(emqx_plugin_template_app).
+-module(emqx_plugin_http_auth_app).
 
 -behaviour(application).
 
 -export([start/2, stop/1]).
 
 start(_StartType, _StartArgs) ->
-    {ok, Sup} = emqx_plugin_template_sup:start_link(),
-    ok = emqx_access_control:register_mod(auth, emqx_auth_demo, []),
-    ok = emqx_access_control:register_mod(acl, emqx_acl_demo, []),
-    emqx_plugin_template:load(application:get_all_env()),
+    {ok, Sup} = emqx_plugin_http_auth_sup:start_link(),
+    ok = emqx_access_control:register_mod(auth, emqx_plugin_http_auth_auth, []),
+    ok = emqx_access_control:register_mod(acl, emqx_plugin_http_auth_acl, []),
+    emqx_plugin_http_auth:load(application:get_all_env()),
+    emqx_plugin_http_auth_cfg:register(),
     {ok, Sup}.
 
 stop(_State) ->
-    ok = emqx_access_control:unregister_mod(auth, emqx_auth_demo),
-    ok = emqx_access_control:unregister_mod(acl, emqx_acl_demo),
-    emqx_plugin_template:unload().
+    ok = emqx_access_control:unregister_mod(auth, emqx_plugin_http_auth_auth),
+    ok = emqx_access_control:unregister_mod(acl, emqx_plugin_http_auth_acl),
+    emqx_plugin_http_auth:unload(),
+    emqx_plugin_http_auth_cfg:unregister().
 

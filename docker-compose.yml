@@ -1,0 +1,10 @@
+version: '3'
+services:
+  emqx:
+    build: .
+    ports:
+      - "8083:8083"
+      - "18083:18083"
+      - "1883:1883"
+    volumes:
+      - "/Users/fanhongchang/emnets/emqx-plugin-template/ebin:/opt/emqx/lib/emqx_plugin_http_auth-0.1/ebin"
