@@ -1,5 +1,5 @@
-{application,emqx_plugin_template,
-             [{description,"EMQ X Plugin Template"},
+{application,emqx_plugin_http_auth,
+             [{description,"EMQ X Plugin HTTP Auth"},
               {vsn,"git"},
               {modules,[]},
               {registered,[emqx_plugin_http_auth_sup]},
